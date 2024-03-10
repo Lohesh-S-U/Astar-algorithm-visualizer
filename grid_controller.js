@@ -14,6 +14,8 @@ let max_column_count = 20;
 function genGrid(row, column){
     grid_container.innerHTML = ""
     for(let i = 0; i < row*column ; i++){
+
+        // Changes can be made later to keep this a div or something else in accordance to what we want
         const cell = document.createElement('div');
         cell.classList.add('grid-item');
         cell.textContent = "I";

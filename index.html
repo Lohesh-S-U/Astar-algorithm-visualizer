@@ -16,15 +16,38 @@
         <div class="counter d-flex flex-row align-items-center border m-5" id="row-counter">
                 <span class="m-2 grid-counter" id="row-counter-span">1</span>
                 <div class="btn-div d-flex flex-column">
-                    <button id="row-counter-up">UP</button>
-                    <button id="row-counter-down">DOWN</button>
+                    <!-- <button id="row-counter-up">UP</button> -->
+                    <a class="arrow-up" id="up-arrow">
+                      <button class="arrow-btn" id="row-counter-up"></button>
+                      <span class="left-arm"></span>
+                      <span class="right-arm"></span>
+                      <span class="arrow-slide"></span>
+                    </a>
+                    <!-- <button id="row-counter-down">DOWN</button> -->
+                    <a class="arrow-up" id="down-arrow">
+                      <button class="arrow-btn" id="row-counter-down"></button>
+                      <span class="left-arm"></span>
+                      <span class="right-arm"></span>
+                      <span class="arrow-slide"></span>
+                    </a>
                 </div>
         </div>
         <div class="counter d-flex flex-row align-items-center border" id="column-counter">
             <span class="m-2 grid-counter" id="column-counter-span">1</span>
             <div class="btn-div d-flex flex-column">
-                <button id="column-counter-up">UP</button>
-                <button id="column-counter-down">DOWN</button>
+              <a class="arrow-up" id="up-arrow">
+                <button class="arrow-btn" id="column-counter-up"></button>
+                <span class="left-arm"></span>
+                <span class="right-arm"></span>
+                <span class="arrow-slide"></span>
+              </a>
+              <!-- <button id="row-counter-down">DOWN</button> -->
+              <a class="arrow-up" id="down-arrow">
+                <button class="arrow-btn" id="column-counter-down"></button>
+                <span class="left-arm"></span>
+                <span class="right-arm"></span>
+                <span class="arrow-slide"></span>
+              </a>
             </div>
         </div>
 
@@ -40,6 +63,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-	<script src="index.js"></script>
+	<script src="grid_controller.js"></script>
   </body>
 </html>

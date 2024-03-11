@@ -1,8 +1,8 @@
 //Declarations for grid row and column
-const row_up = document.getElementById("row-counter-up");
-const row_down = document.getElementById("row-counter-down");
-const column_up = document.getElementById("column-counter-up");
-const column_down = document.getElementById("column-counter-down");
+const row_up = document.querySelector(".row-counter-up");
+const row_down = document.querySelector(".row-counter-down");
+const column_up = document.querySelector(".column-counter-up");
+const column_down = document.querySelector(".column-counter-down");
 const row_span = document.getElementById("row-counter-span")
 const column_span = document.getElementById("column-counter-span")
 const grid_container = document.querySelector(".grid-container");

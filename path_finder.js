@@ -105,8 +105,11 @@ function astar(maze, start, end) {
 
 search_btn.addEventListener('click',()=>{
     let grid_info = get_grid_info();  // 0 -> grid , 1-> start coordinate , 2-> end coordinate
-    
-    let path = astar(grid_info[0], grid_info[1], grid_info[2]);
-    console.log(grid_info[0])
-    console.log(path)
+    if(grid_info.length !== 0){
+        let path = astar(grid_info[0], grid_info[1], grid_info[2]);
+        console.log(grid_info)
+        console.log(path)
+    }else{
+        alert("Start or end not provided!!")
+    }
 })

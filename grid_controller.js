@@ -50,3 +50,11 @@ column_down.addEventListener('click', () => {
     genGrid(row_count, column_count);
 })
 genGrid(1,1);
+
+export function get_row_count(){
+    return row_count;
+}
+
+export function get_col_count(){
+    return column_count;
+}

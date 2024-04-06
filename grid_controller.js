@@ -9,6 +9,7 @@ const grid_container = document.querySelector(".grid-container");
 
 const start_btn = document.getElementById("start")
 const end_btn = document.getElementById("end")
+const obstacle_btn = document.getElementById("obstacle")
 
 
 var buttons;
@@ -42,6 +43,7 @@ let grid = [
 //CSS Attributes
 const grid_idle_color = "grey"
 const grid_start_color = "red"
+const grid_obstacle_color = "brown"
 const grid_end_color = "yellow"
 
 
@@ -102,6 +104,27 @@ column_down.addEventListener('click', () => {
 genGrid(row_count,column_count);
 
 
+
+function isCoordinatePresent(coordinates, targetCoordinate) {
+    for (var i = 0; i < coordinates.length; i++) {
+        if (coordinates[i][0] === targetCoordinate[0] && coordinates[i][1] === targetCoordinate[1]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function removeCoordinate(coordinates, targetCoordinate) {
+    var index = coordinates.findIndex(function(coordinate) {
+        return coordinate[0] === targetCoordinate[0] && coordinate[1] === targetCoordinate[1];
+    });
+    if (index !== -1) {
+        coordinates.splice(index, 1);
+    }
+}
+
+
+
 //Event listner for all the cells
 buttons.forEach(function(button) {
     button.addEventListener("click", function() {
@@ -131,6 +154,25 @@ buttons.forEach(function(button) {
                 }
                 button.style.backgroundColor = grid_end_color
                 end = [button.id[0],button.id[2]]
+                
+            }
+        }else if(choice === 1){
+            const cur_btn = [parseInt(button.id[0]), parseInt(button.id[2])];
+            
+            if(isCoordinatePresent(obstacle, cur_btn)){ //Toggle off obstacle
+                
+                const obs_btn = document.getElementById(`${button.id[0]}-${button.id[2]}`);
+                obs_btn.style.backgroundColor = grid_idle_color;
+
+                //Remove cur btn from obstacle
+                removeCoordinate(obstacle, cur_btn);
+
+            }else{  //Toggle on obstacle
+                const obs_btn = document.getElementById(`${button.id[0]}-${button.id[2]}`);
+                obs_btn.style.backgroundColor = grid_obstacle_color;
+                
+                //Add new obstacle 
+                obstacle.push([parseInt(button.id[0]), parseInt(button.id[2])]);
             }
         }
 
@@ -145,6 +187,10 @@ end_btn.addEventListener("click", function(){
     choice = 2;
 })
 
+obstacle_btn.addEventListener("click", function(){
+    choice = 1;
+})
+
 
 
 export function get_grid_info(){
@@ -152,4 +198,12 @@ export function get_grid_info(){
     let grid_info = [grid, start, end];
     return grid_info;
 }
+
+
+
+
+
+
+
+//TODO : when user shrinking grid, start end and obstacle should be updated
 

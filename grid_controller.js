@@ -68,6 +68,10 @@ function genGrid(row, column){
 
     //Every time a new grid is generated , query selectors will be updated
     buttons = document.querySelectorAll(".grid-item");
+    buttoneventHandler();
+    start = []
+    end = []
+    obstacle = []
 
 }
 
@@ -118,66 +122,71 @@ function removeCoordinate(coordinates, targetCoordinate) {
 }
 
 
+function buttoneventHandler(){
 
-//Event listner for all the cells
-buttons.forEach(function(button) {
-    button.addEventListener("click", function() {
-        var buttonId = button.id;
-        // console.log("Button clicked: " + buttonId)
-        if(choice === 0){ //Start
-            if(start.length !== 0){
-                const cur_start = document.getElementById(`${start[0]}-${start[1]}`);
-                if(buttonId === cur_start.id ){
-                    cur_start.style.backgroundColor = grid_idle_color
-                }else{
-                    if(cur_start !== null){
+    //Event listner for all the cells
+    buttons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            
+            var buttonId = button.id;
+            // console.log("Button clicked: " + buttonId)
+            if(choice === 0){ //Start
+                if(start.length !== 0){
+                    const cur_start = document.getElementById(`${start[0]}-${start[1]}`);
+                    if(buttonId === cur_start.id ){
                         cur_start.style.backgroundColor = grid_idle_color
+                    }else{
+                        if(cur_start !== null){
+                            cur_start.style.backgroundColor = grid_idle_color
+                        }
+                        button.style.backgroundColor = grid_start_color
+                        start = [parseInt(button.id[0]),parseInt(button.id[2])]
                     }
+                }else{
                     button.style.backgroundColor = grid_start_color
                     start = [parseInt(button.id[0]),parseInt(button.id[2])]
                 }
-            }else{
-                button.style.backgroundColor = grid_start_color
-                start = [parseInt(button.id[0]),parseInt(button.id[2])]
-            }
-        }else if( choice === 2){ //End
-            if(end.length !== 0){
-                const cur_end = document.getElementById(`${end[0]}-${end[1]}`);
-                if(buttonId === cur_end.id ){
-                    cur_end.style.backgroundColor = grid_idle_color
-                }else{
-                    if(cur_end !== null){
+            }else if( choice === 2){ //End
+                if(end.length !== 0){
+                    const cur_end = document.getElementById(`${end[0]}-${end[1]}`);
+                    if(buttonId === cur_end.id ){
                         cur_end.style.backgroundColor = grid_idle_color
+                    }else{
+                        if(cur_end !== null){
+                            cur_end.style.backgroundColor = grid_idle_color
+                        }
+                        button.style.backgroundColor = grid_end_color
+                        end = [parseInt(button.id[0]),parseInt(button.id[2])] 
                     }
+                }else{
                     button.style.backgroundColor = grid_end_color
-                    end = [parseInt(button.id[0]),parseInt(button.id[2])] 
+                    end = [parseInt(button.id[0]),parseInt(button.id[2])]
                 }
-            }else{
-                button.style.backgroundColor = grid_end_color
-                end = [parseInt(button.id[0]),parseInt(button.id[2])]
-            }
-        }else if(choice === 1){ //Obstacle
-            const cur_btn = [parseInt(button.id[0]), parseInt(button.id[2])];
-            
-            if(isCoordinatePresent(obstacle, cur_btn)){ //Toggle off obstacle
+            }else if(choice === 1){ //Obstacle
+                const cur_btn = [parseInt(button.id[0]), parseInt(button.id[2])];
                 
-                const obs_btn = document.getElementById(`${button.id[0]}-${button.id[2]}`);
-                obs_btn.style.backgroundColor = grid_idle_color;
-
-                //Remove cur btn from obstacle
-                removeCoordinate(obstacle, cur_btn);
-
-            }else{  //Toggle on obstacle
-                const obs_btn = document.getElementById(`${button.id[0]}-${button.id[2]}`);
-                obs_btn.style.backgroundColor = grid_obstacle_color;
-                
-                //Add new obstacle 
-                obstacle.push([parseInt(button.id[0]), parseInt(button.id[2])]);
+                if(isCoordinatePresent(obstacle, cur_btn)){ //Toggle off obstacle
+                    
+                    const obs_btn = document.getElementById(`${button.id[0]}-${button.id[2]}`);
+                    obs_btn.style.backgroundColor = grid_idle_color;
+    
+                    //Remove cur btn from obstacle
+                    removeCoordinate(obstacle, cur_btn);
+    
+                }else{  //Toggle on obstacle
+                    const obs_btn = document.getElementById(`${button.id[0]}-${button.id[2]}`);
+                    obs_btn.style.backgroundColor = grid_obstacle_color;
+                    
+                    //Add new obstacle 
+                    obstacle.push([parseInt(button.id[0]), parseInt(button.id[2])]);
+                }
             }
-        }
-
+    
+        });
     });
-});
+}
+
+
 
 
 start_btn.addEventListener("click", function(){

@@ -1,9 +1,7 @@
-import { get_row_count, get_col_count } from "./grid_controller.js";
+import { get_grid_info} from "./grid_controller.js";
 
 const search_btn = document.getElementById("search");
 
-let ROW;
-let COL; 
 
 class Node {
     constructor(parent, position) {
@@ -29,9 +27,7 @@ function astar(maze, start, end) {
     let closedList = [];
 
     openList.push(startNode);
-    //console.log("Length : ",openList.length)
     while (openList.length > 0) {
-        //console.log(openList);
         let currentNode = openList[0];
         let currentIndex = 0;
 
@@ -108,18 +104,9 @@ function astar(maze, start, end) {
 }
 
 search_btn.addEventListener('click',()=>{
-    ROW = get_row_count();
-    COL = get_col_count();
-
-    //console.log(document.querySelectorAll(".grid-item"));
-
-    let grid = [
-        [0,0,0,0,0],
-        [0,1,1,1,0],
-        [0,1,0,0,0],
-        [0,0,0,0,0],
-        [0,0,0,0,0]
-    ];
-    let path = astar(grid, [0,0],[4,4]);
-    console.log(grid,path);
+    let grid_info = get_grid_info();  // 0 -> grid , 1-> start coordinate , 2-> end coordinate
+    
+    let path = astar(grid_info[0], grid_info[1], grid_info[2]);
+    console.log(grid_info[0])
+    console.log(path)
 })

@@ -27,17 +27,11 @@ let choice = 0
 
 
 //Information about start, obstacle and end cells
-let start = [0,0]
-let end = [4,4]
+let start = []
+let end = []
 let obstacle = []
 
-let grid = [
-    [0,0,0,0,0],
-    [0,1,1,1,0],
-    [0,1,0,0,0],
-    [0,0,0,0,0],
-    [0,0,0,0,0]
-];
+
 
 
 //CSS Attributes
@@ -129,34 +123,40 @@ function removeCoordinate(coordinates, targetCoordinate) {
 buttons.forEach(function(button) {
     button.addEventListener("click", function() {
         var buttonId = button.id;
-        // console.log("Button clicked: " + buttonId);
-
-
+        // console.log("Button clicked: " + buttonId)
         if(choice === 0){ //Start
-            const cur_start = document.getElementById(`${start[0]}-${start[1]}`);
-            if(buttonId === cur_start.id ){
-                cur_start.style.backgroundColor = grid_idle_color
-            }else{
-                if(cur_start !== null){
-    
+            if(start.length !== 0){
+                const cur_start = document.getElementById(`${start[0]}-${start[1]}`);
+                if(buttonId === cur_start.id ){
                     cur_start.style.backgroundColor = grid_idle_color
+                }else{
+                    if(cur_start !== null){
+                        cur_start.style.backgroundColor = grid_idle_color
+                    }
+                    button.style.backgroundColor = grid_start_color
+                    start = [parseInt(button.id[0]),parseInt(button.id[2])]
                 }
+            }else{
                 button.style.backgroundColor = grid_start_color
-                start = [button.id[0],button.id[2]]
+                start = [parseInt(button.id[0]),parseInt(button.id[2])]
             }
         }else if( choice === 2){ //End
-            const cur_end = document.getElementById(`${end[0]}-${end[1]}`);
-            if(buttonId === cur_end.id ){
-                cur_end.style.backgroundColor = grid_idle_color
-            }else{
-                if(cur_end !== null){
+            if(end.length !== 0){
+                const cur_end = document.getElementById(`${end[0]}-${end[1]}`);
+                if(buttonId === cur_end.id ){
                     cur_end.style.backgroundColor = grid_idle_color
+                }else{
+                    if(cur_end !== null){
+                        cur_end.style.backgroundColor = grid_idle_color
+                    }
+                    button.style.backgroundColor = grid_end_color
+                    end = [parseInt(button.id[0]),parseInt(button.id[2])] 
                 }
+            }else{
                 button.style.backgroundColor = grid_end_color
-                end = [button.id[0],button.id[2]]
-                
+                end = [parseInt(button.id[0]),parseInt(button.id[2])]
             }
-        }else if(choice === 1){
+        }else if(choice === 1){ //Obstacle
             const cur_btn = [parseInt(button.id[0]), parseInt(button.id[2])];
             
             if(isCoordinatePresent(obstacle, cur_btn)){ //Toggle off obstacle
@@ -181,24 +181,56 @@ buttons.forEach(function(button) {
 
 
 start_btn.addEventListener("click", function(){
+    end_btn.style.backgroundColor = "white"
+    obstacle_btn.style.backgroundColor = "white"
+    start_btn.style.backgroundColor = "red"
     choice = 0;
 })
 end_btn.addEventListener("click", function(){
+    end_btn.style.backgroundColor = "red"
+    obstacle_btn.style.backgroundColor = "white"
+    start_btn.style.backgroundColor = "white"
     choice = 2;
 })
 
 obstacle_btn.addEventListener("click", function(){
+    end_btn.style.backgroundColor = "white"
+    obstacle_btn.style.backgroundColor = "red"
+    start_btn.style.backgroundColor = "white"
     choice = 1;
 })
 
 
+function fillGrid(m, n, obstacles) {
+    // Create an empty grid with all elements initialized to 0
+    var grid = Array.from({ length: m }, () => Array(n).fill(0));
 
-export function get_grid_info(){
-    //fill in the grid here
-    let grid_info = [grid, start, end];
-    return grid_info;
+    // Iterate through the obstacles array
+    obstacles.forEach(function(coordinate) {
+        var x = coordinate[0];
+        var y = coordinate[1];
+        
+        // Check if the coordinate is within the grid bounds
+        if (x >= 0 && x < m && y >= 0 && y < n) {
+            // Set the corresponding element in the grid to 1
+            grid[x][y] = 1;
+        }
+    });
+
+    return grid;
 }
 
+
+
+export function get_grid_info(){
+    //Check whether start and end are provided
+    if(start.length !== 0 && end.length !== 0 ){
+        let grid = fillGrid(row_count, column_count, obstacle);
+        let grid_info = [grid, start, end];
+        return grid_info;
+    }
+    return [];
+}
 
 
 

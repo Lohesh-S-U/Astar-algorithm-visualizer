@@ -6,13 +6,18 @@ const column_down = document.querySelector(".column-counter-down");
 const row_span = document.getElementById("row-counter-span")
 const column_span = document.getElementById("column-counter-span")
 const grid_container = document.querySelector(".grid-container");
+
+const start_btn = document.getElementById("start")
+const end_btn = document.getElementById("end")
+
+
 var buttons;
 
-let row_count =2, column_count = 2;
+let row_count =5, column_count = 5;
 let max_row_count = 15;
 let max_column_count = 20;
 
-let choice = 0  
+let choice = 0
 // This variable is used to determine which option the user wants
 // 0 -> any cell that the user will click on will become the start cell
 // 1 -> any cell that the user will click on will toggle the cell to become a obstacle
@@ -101,36 +106,49 @@ genGrid(row_count,column_count);
 buttons.forEach(function(button) {
     button.addEventListener("click", function() {
         var buttonId = button.id;
-        console.log("Button clicked: " + buttonId);
+        // console.log("Button clicked: " + buttonId);
 
 
         if(choice === 0){ //Start
-            //Implement some toggling thing
             const cur_start = document.getElementById(`${start[0]}-${start[1]}`);
-            if(cur_start !== null){
-
+            if(buttonId === cur_start.id ){
                 cur_start.style.backgroundColor = grid_idle_color
+            }else{
+                if(cur_start !== null){
+    
+                    cur_start.style.backgroundColor = grid_idle_color
+                }
+                button.style.backgroundColor = grid_start_color
+                start = [button.id[0],button.id[2]]
             }
-            
-            button.style.backgroundColor = grid_start_color
-            //Update new start
         }else if( choice === 2){ //End
-            //Implement some toggling thing
             const cur_end = document.getElementById(`${end[0]}-${end[1]}`);
-            if(cur_end !== null){
-
+            if(buttonId === cur_end.id ){
                 cur_end.style.backgroundColor = grid_idle_color
+            }else{
+                if(cur_end !== null){
+                    cur_end.style.backgroundColor = grid_idle_color
+                }
+                button.style.backgroundColor = grid_end_color
+                end = [button.id[0],button.id[2]]
             }
-            
-            button.style.backgroundColor = grid_end_color
-            //Update new end
         }
 
     });
 });
 
 
+start_btn.addEventListener("click", function(){
+    choice = 0;
+})
+end_btn.addEventListener("click", function(){
+    choice = 2;
+})
+
+
+
 export function get_grid_info(){
+    //fill in the grid here
     let grid_info = [grid, start, end];
     return grid_info;
 }

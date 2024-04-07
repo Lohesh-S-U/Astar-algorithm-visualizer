@@ -6,6 +6,8 @@ const column_down = document.querySelector(".column-counter-down");
 const row_span = document.getElementById("row-counter-span")
 const column_span = document.getElementById("column-counter-span")
 const grid_container = document.querySelector(".grid-container");
+const row_counter_span = document.getElementById("row-counter-span");
+const column_counter_span = document.getElementById("column-counter-span");
 
 const start_btn = document.getElementById("start")
 const end_btn = document.getElementById("end")
@@ -15,8 +17,8 @@ const obstacle_btn = document.getElementById("obstacle")
 var buttons;
 
 let row_count =5, column_count = 5;
-let max_row_count = 15;
-let max_column_count = 20;
+let max_row_count = 9;
+let max_column_count = 8;
 
 let choice = 0
 // This variable is used to determine which option the user wants
@@ -35,7 +37,7 @@ let obstacle = []
 
 
 //CSS Attributes
-const grid_idle_color = "grey"
+const grid_idle_color = "white"
 const grid_start_color = "red"
 const grid_obstacle_color = "brown"
 const grid_end_color = "yellow"
@@ -99,7 +101,7 @@ column_down.addEventListener('click', () => {
     column_span.textContent = column_count;
     genGrid(row_count, column_count);
 })
-genGrid(row_count,column_count);
+
 
 
 
@@ -189,8 +191,9 @@ function buttoneventHandler(){
 }
 
 
-
-
+row_counter_span.innerHTML = `${row_count}`;
+column_counter_span.innerHTML = `${column_count}`
+genGrid(row_count,column_count);
 start_btn.addEventListener("click", function(){
     end_btn.style.backgroundColor = "white"
     obstacle_btn.style.backgroundColor = "white"

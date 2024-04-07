@@ -53,7 +53,7 @@ function genGrid(row, column){
             //Attributes for each cell in the grid
             const cell = document.createElement('button');
             cell.classList.add('grid-item');
-            cell.textContent = `${i}-${j}`;
+            // cell.textContent = `${i}-${j}`;
             cell.style.backgroundColor = grid_idle_color
             cell.style.color = 'black'
             
@@ -197,11 +197,11 @@ genGrid(row_count,column_count);
 start_btn.addEventListener("click", function(){
     end_btn.style.backgroundColor = "white"
     obstacle_btn.style.backgroundColor = "white"
-    start_btn.style.backgroundColor = "red"
+    start_btn.style.backgroundColor = grid_start_color
     choice = 0;
 })
 end_btn.addEventListener("click", function(){
-    end_btn.style.backgroundColor = "red"
+    end_btn.style.backgroundColor = grid_end_color
     obstacle_btn.style.backgroundColor = "white"
     start_btn.style.backgroundColor = "white"
     choice = 2;
@@ -209,7 +209,7 @@ end_btn.addEventListener("click", function(){
 
 obstacle_btn.addEventListener("click", function(){
     end_btn.style.backgroundColor = "white"
-    obstacle_btn.style.backgroundColor = "red"
+    obstacle_btn.style.backgroundColor = grid_obstacle_color
     start_btn.style.backgroundColor = "white"
     choice = 1;
 })

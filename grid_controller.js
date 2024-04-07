@@ -135,6 +135,7 @@ function buttoneventHandler(){
                     const cur_start = document.getElementById(`${start[0]}-${start[1]}`);
                     if(buttonId === cur_start.id ){
                         cur_start.style.backgroundColor = grid_idle_color
+                        start=[]
                     }else{
                         if(cur_start !== null){
                             cur_start.style.backgroundColor = grid_idle_color
@@ -151,6 +152,7 @@ function buttoneventHandler(){
                     const cur_end = document.getElementById(`${end[0]}-${end[1]}`);
                     if(buttonId === cur_end.id ){
                         cur_end.style.backgroundColor = grid_idle_color
+                        end=[]
                     }else{
                         if(cur_end !== null){
                             cur_end.style.backgroundColor = grid_idle_color

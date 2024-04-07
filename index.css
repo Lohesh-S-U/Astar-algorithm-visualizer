@@ -11,15 +11,15 @@
 }
 
 
-.grid-item{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    border: 0.5px solid white;
-    margin: 2px;
+.grid-item {
+
+  border: 1px solid #ccc;
+
+  text-align: center; 
+  cursor: pointer; 
 }
+
+
 
 
 .grid_prop_div{

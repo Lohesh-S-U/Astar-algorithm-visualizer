@@ -1,3 +1,13 @@
+@font-face {
+  font-family: text-font;
+  src: url(Fonts/Star\ Shield.ttf);
+}
+
+
+.counter{
+  border: 1px solid rgb(0, 238, 255);
+}
+
 .grid-container{
     display: grid;
     height: 60vh;
@@ -7,14 +17,12 @@
 }
 
 .grid-counter{
-    color: white;
+  color: rgb(0, 238, 255);
+  
 }
 
-
 .grid-item {
-
-  border: 1px solid #ccc;
-
+  border: 3px solid #d400ff;
   text-align: center; 
   cursor: pointer; 
 }
@@ -29,7 +37,18 @@
   justify-content: space-between;
 }
 
+.grid_prop_btn{
+  height: 5vh;
+  width: 7vw;
+  border: 1px solid rgb(0, 238, 255);
+  background-color: black;
+  color: rgb(0, 238, 255);
 
+}
+
+.grid_prop_btn:active{
+  transform: translateY(4px);
+}
 
 
 /* Arrow css */
@@ -129,9 +148,30 @@
     
 }
 
-
-
-
 #start{
   background-color: red;
+}
+
+.span-content{
+  color: rgb(0, 238, 255);
+}
+
+
+.grid_prop_div{
+
+  height: 80px;
+}
+
+
+.instruction_div{
+  width: 30vw;
+  position: absolute;
+  color: rgb(0, 238, 255);
+  border: 1px solid rgb(0, 238, 255);
+  border-radius: 5px;
+  padding: 1%;
+  top: 7vh;
+  left: 5vw;
+  font-family: text-font;
+  font-size: 1.4rem;
 }

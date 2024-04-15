@@ -37,11 +37,11 @@ let obstacle = []
 
 
 //CSS Attributes
-const grid_idle_color = "white"
+const grid_idle_color = "black"
 const grid_start_color = "red"
 const grid_obstacle_color = "brown"
 const grid_end_color = "yellow"
-
+const btn_idle_color = "black"
 
 function genGrid(row, column){ 
     //Generates grid everytime row or column changes are made
@@ -195,22 +195,22 @@ row_counter_span.innerHTML = `${row_count}`;
 column_counter_span.innerHTML = `${column_count}`
 genGrid(row_count,column_count);
 start_btn.addEventListener("click", function(){
-    end_btn.style.backgroundColor = "white"
-    obstacle_btn.style.backgroundColor = "white"
+    end_btn.style.backgroundColor = btn_idle_color
+    obstacle_btn.style.backgroundColor = btn_idle_color
     start_btn.style.backgroundColor = grid_start_color
     choice = 0;
 })
 end_btn.addEventListener("click", function(){
     end_btn.style.backgroundColor = grid_end_color
-    obstacle_btn.style.backgroundColor = "white"
-    start_btn.style.backgroundColor = "white"
+    obstacle_btn.style.backgroundColor = btn_idle_color
+    start_btn.style.backgroundColor = btn_idle_color
     choice = 2;
 })
 
 obstacle_btn.addEventListener("click", function(){
-    end_btn.style.backgroundColor = "white"
+    end_btn.style.backgroundColor = btn_idle_color
     obstacle_btn.style.backgroundColor = grid_obstacle_color
-    start_btn.style.backgroundColor = "white"
+    start_btn.style.backgroundColor = btn_idle_color
     choice = 1;
 })
 
@@ -234,10 +234,7 @@ function fillGrid(m, n, obstacles) {
     return grid;
 }
 
-
-
 export function get_grid_info(){
-    //Check whether start and end are provided
     if(start.length !== 0 && end.length !== 0 ){
         let grid = fillGrid(row_count, column_count, obstacle);
         let grid_info = [grid, start, end];
@@ -245,11 +242,3 @@ export function get_grid_info(){
     }
     return [];
 }
-
-
-
-
-
-
-//TODO : when user shrinking grid, start end and obstacle should be updated
-

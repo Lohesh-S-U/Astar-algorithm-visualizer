@@ -1,3 +1,9 @@
+@font-face {
+  font-family: text-font;
+  src: url(Fonts/Star\ Shield.ttf);
+}
+
+
 .counter{
   border: 1px solid rgb(0, 238, 255);
 }
@@ -147,16 +153,25 @@
 }
 
 .span-content{
-  color: white;
+  color: rgb(0, 238, 255);
 }
-
-/* .button-container{
-  background-color: red;
-} */
 
 
 .grid_prop_div{
-  
-  height: 80px;
 
+  height: 80px;
+}
+
+
+.instruction_div{
+  width: 30vw;
+  position: absolute;
+  color: rgb(0, 238, 255);
+  border: 1px solid rgb(0, 238, 255);
+  border-radius: 5px;
+  padding: 1%;
+  top: 7vh;
+  left: 5vw;
+  font-family: text-font;
+  font-size: 1.4rem;
 }

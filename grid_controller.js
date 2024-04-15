@@ -234,10 +234,7 @@ function fillGrid(m, n, obstacles) {
     return grid;
 }
 
-
-
 export function get_grid_info(){
-    //Check whether start and end are provided
     if(start.length !== 0 && end.length !== 0 ){
         let grid = fillGrid(row_count, column_count, obstacle);
         let grid_info = [grid, start, end];
@@ -245,11 +242,3 @@ export function get_grid_info(){
     }
     return [];
 }
-
-
-
-
-
-
-//TODO : when user shrinking grid, start end and obstacle should be updated
-

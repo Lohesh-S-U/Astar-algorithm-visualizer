@@ -262,15 +262,14 @@ function multistar(maze, start, ends){
 }
 
 search_btn.addEventListener('click',()=>{
-    let grid = [
-        [0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0]
-    ]
-
-    let path = multistar(grid,[0,0],[[2,3],[4,4],[0,6]]);
-    console.log(path);
+    let grid_info = get_grid_info();  // 0 -> grid , 1-> start coordinate , 2-> end coordinate
+    // console.log(grid_info);
+    if(grid_info.length !== 0){
+        astar(grid_info[0], grid_info[1], grid_info[2]).then((response)=>{
+            update_path(response,grid_info[0][0].length);
+            console.log(response);
+        })
+    }else{
+        alert("Start or end not provided!!")
+    } 
 })

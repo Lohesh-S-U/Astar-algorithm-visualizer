@@ -148,6 +148,7 @@ async function astar(maze, start, end) {
 
 search_btn.addEventListener('click',()=>{
     let grid_info = get_grid_info();  // 0 -> grid , 1-> start coordinate , 2-> end coordinate
+    // console.log(grid_info);
     if(grid_info.length !== 0){
         astar(grid_info[0], grid_info[1], grid_info[2]).then((response)=>{
             update_path(response,grid_info[0][0].length);

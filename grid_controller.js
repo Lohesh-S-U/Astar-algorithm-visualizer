@@ -14,6 +14,8 @@ const end_btn = document.getElementById("end")
 const obstacle_btn = document.getElementById("obstacle")
 
 
+// const search_btn = document.getElementById("search");
+
 var buttons;
 
 let row_count =5, column_count = 5;
@@ -150,21 +152,22 @@ function buttoneventHandler(){
                     start = [parseInt(button.id[0]),parseInt(button.id[2])]
                 }
             }else if( choice === 2){ //End
-                if(end.length !== 0){
-                    const cur_end = document.getElementById(`${end[0]}-${end[1]}`);
-                    if(buttonId === cur_end.id ){
-                        cur_end.style.backgroundColor = grid_idle_color
-                        end=[]
-                    }else{
-                        if(cur_end !== null){
-                            cur_end.style.backgroundColor = grid_idle_color
-                        }
-                        button.style.backgroundColor = grid_end_color
-                        end = [parseInt(button.id[0]),parseInt(button.id[2])] 
-                    }
-                }else{
-                    button.style.backgroundColor = grid_end_color
-                    end = [parseInt(button.id[0]),parseInt(button.id[2])]
+                const cur_btn = [parseInt(button.id[0]), parseInt(button.id[2])];
+                
+                if(isCoordinatePresent(end, cur_btn)){ //Toggle off obstacle
+                    
+                    const end_btn = document.getElementById(`${button.id[0]}-${button.id[2]}`);
+                    end_btn.style.backgroundColor = grid_idle_color;
+    
+                    //Remove cur btn from obstacle
+                    removeCoordinate(end, cur_btn);
+    
+                }else{  //Toggle on obstacle
+                    const end_btn = document.getElementById(`${button.id[0]}-${button.id[2]}`);
+                    end_btn.style.backgroundColor = grid_end_color;
+                    
+                    //Add new obstacle 
+                    end.push([parseInt(button.id[0]), parseInt(button.id[2])]);
                 }
             }else if(choice === 1){ //Obstacle
                 const cur_btn = [parseInt(button.id[0]), parseInt(button.id[2])];
@@ -214,6 +217,12 @@ obstacle_btn.addEventListener("click", function(){
     choice = 1;
 })
 
+
+// search_btn.addEventListener("click", function(){
+//     console.log(start);
+//     console.log(end);
+//     console.log(obstacle);
+// })
 
 function fillGrid(m, n, obstacles) {
     // Create an empty grid with all elements initialized to 0

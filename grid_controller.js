@@ -12,6 +12,7 @@ const column_counter_span = document.getElementById("column-counter-span");
 const start_btn = document.getElementById("start")
 const end_btn = document.getElementById("end")
 const obstacle_btn = document.getElementById("obstacle")
+const increase_btn = document.getElementById("increase_terrain")
 
 
 // const search_btn = document.getElementById("search");
@@ -34,6 +35,7 @@ let choice = 0
 let start = []
 let end = []
 let obstacle = []
+let terrain_val = []
 
 
 
@@ -188,7 +190,17 @@ function buttoneventHandler(){
                     obstacle.push([parseInt(button.id[0]), parseInt(button.id[2])]);
                 }
             }
-    
+            else if(choice === 3){
+                const cur_btn = [parseInt(button.id[0]), parseInt(button.id[2])];
+
+                if(!isCoordinatePresent(obstacle, cur_btn)){
+                    const btn = document.getElementById(`${button.id[0]}-${button.id[2]}`);
+                    //console.log(+btn.style.opacity);
+                    //btn.style.opacity = +btn.style.opacity - 0.1;
+
+                    terrain_val.push([parseInt(button.id[0]), parseInt(button.id[2])]);
+                }
+            }
         });
     });
 }
@@ -201,12 +213,14 @@ start_btn.addEventListener("click", function(){
     end_btn.style.backgroundColor = btn_idle_color
     obstacle_btn.style.backgroundColor = btn_idle_color
     start_btn.style.backgroundColor = grid_start_color
+    increase_btn.style.backgroundColor = btn_idle_color
     choice = 0;
 })
 end_btn.addEventListener("click", function(){
     end_btn.style.backgroundColor = grid_end_color
     obstacle_btn.style.backgroundColor = btn_idle_color
     start_btn.style.backgroundColor = btn_idle_color
+    increase_btn.style.backgroundColor = btn_idle_color
     choice = 2;
 })
 
@@ -214,7 +228,16 @@ obstacle_btn.addEventListener("click", function(){
     end_btn.style.backgroundColor = btn_idle_color
     obstacle_btn.style.backgroundColor = grid_obstacle_color
     start_btn.style.backgroundColor = btn_idle_color
+    increase_btn.style.backgroundColor = btn_idle_color
     choice = 1;
+})
+
+increase_btn.addEventListener("click",function(){
+    end_btn.style.backgroundColor = btn_idle_color
+    obstacle_btn.style.backgroundColor = btn_idle_color
+    start_btn.style.backgroundColor = btn_idle_color
+    increase_btn.style.backgroundColor = grid_start_color
+    choice = 3;
 })
 
 
@@ -224,10 +247,18 @@ obstacle_btn.addEventListener("click", function(){
 //     console.log(obstacle);
 // })
 
-function fillGrid(m, n, obstacles) {
+function fillGrid(m, n, obstacles, terrain_val) {
     // Create an empty grid with all elements initialized to 0
-    var grid = Array.from({ length: m }, () => Array(n).fill(0));
+    var grid = Array.from({ length: m }, () => Array(n).fill(1));
 
+    terrain_val.forEach(function(coordinate){
+        let x = coordinate[0];
+        let y = coordinate[1];
+
+        if(x>=0 && x<m && y>=0 && y<n){
+            grid[x][y] += 1
+        }
+    });
     // Iterate through the obstacles array
     obstacles.forEach(function(coordinate) {
         var x = coordinate[0];
@@ -236,7 +267,7 @@ function fillGrid(m, n, obstacles) {
         // Check if the coordinate is within the grid bounds
         if (x >= 0 && x < m && y >= 0 && y < n) {
             // Set the corresponding element in the grid to 1
-            grid[x][y] = 1;
+            grid[x][y] = 0;
         }
     });
 
@@ -245,7 +276,7 @@ function fillGrid(m, n, obstacles) {
 
 export function get_grid_info(){
     if(start.length !== 0 && end.length !== 0 ){
-        let grid = fillGrid(row_count, column_count, obstacle);
+        let grid = fillGrid(row_count, column_count, obstacle, terrain_val);
         let grid_info = [grid, start, end];
         return grid_info;
     }

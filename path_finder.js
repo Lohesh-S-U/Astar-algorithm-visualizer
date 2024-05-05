@@ -128,7 +128,7 @@ async function multiastar(maze, start, ends){
                 continue;
             }
 
-            if (maze[nodePosition[0]][nodePosition[1]] !== 0) {
+            if (maze[nodePosition[0]][nodePosition[1]] == 0) {
                 continue;
             }
 
@@ -159,7 +159,8 @@ async function multiastar(maze, start, ends){
             }
 
             child.h = min;
-            child.f = child.g + child.h;
+            let pos = child.position;
+            child.f = (child.g + child.h)*maze[pos[0]][pos[1]];
 
             let isInOpenList = false;
             for (let openNode of openList) {
@@ -188,6 +189,7 @@ search_btn.addEventListener('click',()=>{
     if(grid_info.length !== 0){
         multiastar(grid_info[0], grid_info[1], grid_info[2]).then((response)=>{
             update_path(response,grid_info[2],grid_info[0][0].length);
+            console.log(grid_info[0]);
             console.log(response);
         })
     }else{

@@ -7,6 +7,7 @@ let grid_items;
 const grid_open_colour = 'green';
 const grid_close_colour = 'red';
 const grid_path_colour = 'blue';
+const grid_end_colour = 'purple';
 
 class Node {
     constructor(parent, position) {
@@ -31,22 +32,30 @@ function update_maze(openList,closedList,col){
         let pos = openList[i].position;
         let x = pos[0];
         let y = pos[1];
-        grid_items[x*col + y].style.backgroundColor = grid_open_colour;
+        if(grid_items[x*col + y].style.backgroundColor == 'black'){
+            grid_items[x*col + y].style.backgroundColor = grid_open_colour;
+        }
     }
     for(let i=0;i < closedList.length; i++){
         let pos = closedList[i].position;
         let x = pos[0];
         let y = pos[1];
-        grid_items[x*col + y].style.backgroundColor = grid_close_colour;
+        grid_items[x*col + y].style.backgroundColor = grid_close_colour;   
     }
 }
 
-function update_path(path,col){
+function update_path(path,endNodes,col){
     for(let i=0;i<path.length;i++){
         let pos = path[i];
         let x = pos[0];
         let y = pos[1];
         grid_items[x*col + y].style.backgroundColor = grid_path_colour;
+        grid_items[x*col + y].innerText = `${i}`;
+    }
+    for(let endNode of endNodes){
+        let x = endNode[0];
+        let y = endNode[1];
+        grid_items[x*col + y].style.backgroundColor = grid_end_colour;
     }
 }
 
@@ -54,18 +63,22 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function astar(maze, start, end) {
+async function multiastar(maze, start, ends){
     get_DOM_grid();
     let startNode = new Node(null, start);
     startNode.g = startNode.h = startNode.f = 0;
-    let endNode = new Node(null, end);
-    endNode.g = endNode.h = endNode.f = 0;
+    let endNodes = [];
+    for(let end of ends){
+        let endNode = new Node(null, end);
+        endNode.g = endNode.h = endNode.f = 0;
+        endNodes.push(endNode);
+    }
 
     let openList = [];
     let closedList = [];
 
     openList.push(startNode);
-    let delayf= 1;
+
     while (openList.length > 0) {
         let currentNode = openList[0];
         let currentIndex = 0;
@@ -79,16 +92,30 @@ async function astar(maze, start, end) {
 
         openList.splice(currentIndex, 1);
         closedList.push(currentNode);
-
-        if (currentNode.equals(endNode)) {
-            update_maze(openList,closedList,maze[0].length); 
-            let path = [];
-            let current = currentNode;
-            while (current !== null) {
-                path.push(current.position);
-                current = current.parent;
+        
+        for(let i=0;i<endNodes.length;i++){
+            if (currentNode.equals(endNodes[i])) {
+                if(endNodes.length==1){
+                    update_maze(openList,closedList,maze[0].length);
+                    let path = [];
+                    let current = currentNode;
+                    while (current !== null) {
+                        path.push(current.position);
+                        current = current.parent;
+                    }
+                    return path.reverse();
+                }
+                else{
+                    console.log("Found :",endNodes[i].position);
+                    openList=[];
+                    closedList = [];
+                    currentNode = new Node(currentNode.parent,endNodes[i].position);
+                    closedList.push(currentNode);
+                    endNodes.splice(i,1);
+                    break;
+                }
+                            
             }
-            return path.reverse();
         }
 
         let children = [];
@@ -101,7 +128,7 @@ async function astar(maze, start, end) {
                 continue;
             }
 
-            if (maze[nodePosition[0]][nodePosition[1]] !== 0) {
+            if (maze[nodePosition[0]][nodePosition[1]] == 0) {
                 continue;
             }
 
@@ -122,8 +149,18 @@ async function astar(maze, start, end) {
             }
 
             child.g = currentNode.g + 1;
-            child.h = Math.sqrt(Math.pow((child.position[0] - endNode.position[0]), 2) + Math.pow((child.position[1] - endNode.position[1]), 2));
-            child.f = child.g + child.h;
+            let min = Number.MAX_VALUE;
+            for(let endNode of endNodes){
+                let h = Math.sqrt(Math.pow((child.position[0] - endNode.position[0]), 2) + Math.pow((child.position[1] - endNode.position[1]), 2));
+
+                if(h<min){
+                    min = h;
+                }
+            }
+
+            child.h = min;
+            let pos = child.position;
+            child.f = (child.g + child.h)*maze[pos[0]][pos[1]];
 
             let isInOpenList = false;
             for (let openNode of openList) {
@@ -138,9 +175,9 @@ async function astar(maze, start, end) {
 
             openList.push(child);
         }
-        
+
         await sleep(1000);
-        update_maze(openList,closedList,maze[0].length);   
+        update_maze(openList,closedList,maze[0].length); 
     }
 
     return [];
@@ -148,12 +185,14 @@ async function astar(maze, start, end) {
 
 search_btn.addEventListener('click',()=>{
     let grid_info = get_grid_info();  // 0 -> grid , 1-> start coordinate , 2-> end coordinate
+    // console.log(grid_info);
     if(grid_info.length !== 0){
-        astar(grid_info[0], grid_info[1], grid_info[2]).then((response)=>{
-            update_path(response,grid_info[0][0].length);
+        multiastar(grid_info[0], grid_info[1], grid_info[2]).then((response)=>{
+            update_path(response,grid_info[2],grid_info[0][0].length);
+            console.log(grid_info[0]);
             console.log(response);
         })
     }else{
         alert("Start or end not provided!!")
-    }
+    } 
 })

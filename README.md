@@ -3,11 +3,11 @@
 This repository contains an implementation of the A* pathfinding algorithm with support for terrain detection and dynamic destinations. The project provides a web-based interface for visualizing the algorithm and changing destinations dynamically. Additionally, the repository includes C++ files for exploring several heuristics of the A* algorithm.
 
 ## Table of Contents
-A* Algorithm for Terrain Detection and Dynamic Destinations
-Table of Contents
-Features
-File Structure
-Installation and Setup
+- A* Algorithm for Terrain Detection and Dynamic Destinations
+- Table of Contents
+- Features
+- File Structure
+- Installation and Setup
 
 ## Features
 - Implementation of the A* pathfinding algorithm for finding optimal paths.
